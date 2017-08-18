@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Components/StaticMeshComponent.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel;
+
 /*
   Holds barrel properties and ElevateBarrel method
 */
