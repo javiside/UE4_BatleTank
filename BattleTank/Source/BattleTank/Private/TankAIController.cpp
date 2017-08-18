@@ -6,13 +6,25 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	if(!GetPlayerTank())
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (!GetPlayerTank())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player Tank not found"));
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player Tank Founded! : %s"), *(GetPlayerTank()->GetName()));
+		// TODO move towards the player
+
+		//Aim towards the player
+		GetControlledAITank()->AimAt(GetPlayerTank()->GetActorLocation());
+		
+		// TODO Fire if ready
+
 	}
 }
 
@@ -25,3 +37,4 @@ ATank* ATankAIController::GetPlayerTank() const
 {
 	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
+
