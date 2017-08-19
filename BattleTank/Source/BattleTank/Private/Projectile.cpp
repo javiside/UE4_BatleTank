@@ -16,7 +16,6 @@ AProjectile::AProjectile()
 
 void AProjectile::LaunchProjectile(float Speed)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Launch Projectile method called!"));
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
 }

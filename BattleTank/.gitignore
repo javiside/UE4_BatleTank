@@ -73,3 +73,6 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+#Unreal's HDRI Background asset
+Content/StarterContent/HDRI/HDRI_Epic_Courtyard_Daylight.uasset
