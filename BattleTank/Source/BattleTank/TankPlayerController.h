@@ -26,10 +26,10 @@ private:
 	would hit where the crosshair intersects the world*/
 	void AimTowardsCrosshair();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float CrossHairXLocation = 0.5f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float CrossHairYLocation = 0.3333f;
 	
 	//Return an OUT parameter, true if hit landscape
@@ -39,6 +39,6 @@ private:
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
 
-	UPROPERTY(EditAnywhere)
-		float LineTraceRange = 1000000.0f;
+	UPROPERTY(EditDefaultsOnly)
+		float LineTraceRange = 10000000.0f;
 };
