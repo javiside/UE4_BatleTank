@@ -8,14 +8,6 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	if (!GetControlledTank())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possesing a tank"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possesing: %s"), *(GetControlledTank()->GetName()));
-	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -53,7 +45,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-
 		//Line-trace along that LookDirection, and see what we hit (up to a max range)
 
 		GetLookVectorHitLocation(LookDirection, OutHitLocation);
@@ -72,7 +63,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 			HitResult,
 			StartLocation,
 			EndLocation,
-			ECollisionChannel::ECC_Camera)
+			ECollisionChannel::ECC_Visibility)
 		)
 	{
 		HitLocation = HitResult.Location;

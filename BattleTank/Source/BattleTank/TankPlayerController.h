@@ -40,5 +40,5 @@ private:
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation) const;
 
 	UPROPERTY(EditDefaultsOnly)
-		float LineTraceRange = 10000000.0f;
+		float LineTraceRange = 1000000.0f;
 };

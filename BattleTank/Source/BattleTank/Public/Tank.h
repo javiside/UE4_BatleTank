@@ -1,4 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Francisco Javier Martinez 2017.
+
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -6,6 +7,7 @@
 
 //Foward Declarations
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -38,6 +40,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+		UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
