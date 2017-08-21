@@ -79,7 +79,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	else
 	{
 		/*auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(AimDirection);*/ //TODO Aim always to crosshair? (Remove IF)
+		MoveBarrelTowards(AimDirection);*/							//TODO Aim always to crosshair? (Remove IF)
 	}
 }
 
@@ -92,7 +92,16 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+
+	// Always Yaw the shortest Way
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
 }
 
 void UTankAimingComponent::Fire()
