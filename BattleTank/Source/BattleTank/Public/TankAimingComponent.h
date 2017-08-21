@@ -6,7 +6,7 @@
 #include "TankAimingComponent.generated.h"
 
 UENUM()
-enum class EFiringStatus : uint8
+enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
@@ -37,9 +37,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 
+	EFiringState GetFiringState() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringStatus FiringStatus = EFiringStatus::Reloading;
+		EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	// Sets default values for this component's properties
