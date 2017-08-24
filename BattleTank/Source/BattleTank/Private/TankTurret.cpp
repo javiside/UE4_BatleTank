@@ -12,5 +12,8 @@ void UTankTurret::Rotate(float RelativeSpeed)
 	float RawNewRotation = RelativeRotation.Yaw + RotationChange;
 	//Clamp the rotation to the minimum and maximun allowed
 	//RawNewRotation = FMath::Clamp<float>(RawNewRotation, -180, 180);
+	
+	
 	SetRelativeRotation(FRotator(0, RawNewRotation, 0));
+
 }
