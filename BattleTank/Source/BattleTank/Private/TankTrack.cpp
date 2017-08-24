@@ -4,7 +4,7 @@
 
 UTankTrack::UTankTrack()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
 void UTankTrack::BeginPlay()
@@ -33,11 +33,13 @@ void UTankTrack::ApplySidewaysForce()
 
 void UTankTrack::SetThrottle(float Throttle)
 {
+	//UE_LOG(LogTemp, Warning, TEXT("%f THRO CALL"), GetWorld()->GetTimeSeconds());
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
 }
 
 void UTankTrack::DriveTrack()
 {
+	//UE_LOG(LogTemp, Warning, TEXT("%f DRIVE CALL"), GetWorld()->GetTimeSeconds());
 	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());

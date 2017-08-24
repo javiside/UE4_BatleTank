@@ -32,7 +32,7 @@ private:
 	// Sets default values for this component's properties
 	UTankTrack();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	float CurrentThrottle = 0;
