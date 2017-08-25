@@ -33,7 +33,7 @@ void UTankTrack::ApplySidewaysForce()
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("%f THRO CALL"), GetWorld()->GetTimeSeconds());
+	//UE_LOG(LogTemp, Warning, TEXT("%f THRO CALL"), Throttle);
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
 }
 
