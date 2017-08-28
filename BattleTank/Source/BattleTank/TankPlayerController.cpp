@@ -21,6 +21,12 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
+UTankAimingComponent* ATankPlayerController::GetAimingReference() 
+{
+	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+		return AimingComponent;
+}
+
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetPawn()) { return; } //e.g If not possessing

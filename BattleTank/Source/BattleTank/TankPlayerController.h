@@ -10,7 +10,7 @@ class UTankAimingComponent;
 /**
  * Responsible for helping the player aim.
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
@@ -18,6 +18,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	UTankAimingComponent* GetAimingReference();
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
