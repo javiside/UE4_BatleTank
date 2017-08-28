@@ -46,15 +46,6 @@
 + Paint: use layered materials 
 + Details: add details (foliage, trees, etc)
 
-### Upgrading Engine Version ###
-
-+ Epic games launcher helps manage versions
-+ Remember to commit your project first 
-+ You can then “Convert in-place” 
-+ Check your project runs OK in new version 
-+ Close everything and re-commit 
-+ How to tag a commit in GitHub.
-
 ### Using Landscape Layers ###
 
 + Create a material for your landscape
@@ -282,20 +273,12 @@
 + These .obj files are linked by the linker 
 + How to #include strategically.
 
-### Review Our Execution Flow ###
+### Execution Flow Review ###
 
 + How to disable or enable tick on various classes
 + **GetWorld()->GetTimeSeconds()** for logging 
 + Documenting your execution flow for clarity 
 + Change parameter names for clarity.
-
-### How to Report Bugs ###
-
-+ If something’s weird break it down
-+ Use logs or the debugger to follow each step 
-+ SuggestProjectileVelocity() has a bug\* 
-+ … it MUST have an optional parameter!? 
-+ Moving to forward declarations.
 
 ### Using Clamp() to Limit Values ###
 
@@ -305,14 +288,14 @@
 + Wire it to the aiming component 
 + Test barrel elevation works.
 
-### CHALLENGE - Turret Rotation ###
+### Turret Rotation ###
 
 This mid-section challenge will help you integrate your knowledge and really
 cement what you’ve done in the past few lectures. It will also give you a
 great foundation of practical understanding on which to build. Please give it
 a good shot before watching my solution.
 
-### CHALLENGE - Turret Rotation Pt.2 ###
+### Turret Rotation Pt.2 ###
 
 This is the 2nd part of the solution to this section’s longer challenge. We’ll
 be finishing off the turret rotation, giving us complete barrel aiming control
@@ -324,21 +307,6 @@ by the end :-)
 + Bind input via Blueprint 
 + Call this new C++ method to test 
 + Create a **Projectile** class, and Blueprint it.
-
-### Upgrading to Unreal 4.12 ###
-
-+ Multiple versions of the engine take up GB
-+ Upgrade Building Escape and Battle Tank 
-+ Learn more about using source control 
-+ Using Stash in source control 
-+ Fixing issue with overlapping collision volumes.
-
-### Working Round Awkward Bugs ###
-
-+ About AutoWeld compound objects
-+ Working through self-collision issues 
-+ Disabling gravity on subobjects 
-+ A reminder Unreal is designed for humanoids.
 
 ### Using SpawnActor<>() to Spawn ###
 
@@ -381,3 +349,273 @@ by the end :-)
 + Create a **BlueprintCallable** throttle method 
 + Bind input to track throttles 
 + Discuss what Input Axis Scale does.
+
+### ApplyForceAtLocation() in Action ###
+
++ **GetComponentLocation()** does what it says!
++ Find root: **GetOwner()->GetRootComponent());**
++ Cast to **UPrimitiveComponent** so you can… 
++ **AddForceAtLocation();**
++ Estimate sensible defaults for driving forces.
+
+### Physics Materials & Friction ###
+
++ You can assign a physics material under collision
++ Friction is combined between two surfaces
++ The coefficient is the proportion of the contact force that can be exerted sideways before slip.
++ Adjust friction and driving forces to get movement.
+
+### Fly-by-Wire Control System ###
+
++ Fly-by-wire means translating control intention
++ How control intention maps to track throttles 
++ Creating a **TankMovementComponent** C++ class 
++ Why inherit from **UNavMovementComponent**
+
+### Using BlueprintReadOnly ###
+
++ Bind some input for forward and backward
++ Make the method **BlueprintCallable**
++ Make **TankMovementComponent** a default on tank 
++ Make a protected tank variable to store pointer 
++ Make this pointer **BlueprintReadOnly** pointer 
++ Test that you get a log of +/-1.
+
+### A Better Component Architecture ###
+
++ Actor components require instance references
++ We were passing these references from the tank 
++ But we could equally keep them locally 
++ Move to composing our actor in Blueprint 
++ Create an initialise method for aiming 
++ Test it works and hail the simpler code.
+
+### Completing Manual Tank Movement ###
+
++ **Add IntendTurnRight()** method
++ Bind firing input to the “A button” 
++ Test we can move manually with fly-by-wire.
+
+### Introducing AI Pathfinding ###
+
++ Pathfinding is finding the shortest possible path
++ This requires some (artificial) intelligence 
++ All pathfinding must happen on a navmesh 
++ Adding Nav Mesh Bounds to the level 
++ An overview of how **MoveToActor()** and **RequestDirectMove()** work.
+
+### Dissecting RequestDirectMove() ###
+
++ We have access to Unreal’s source code
++ Let’s look into the **UNavMovementComponent.h**
++ We’re looking for **RequestDirectMove()**
++ We’ll override it without calling **Super**
++ We can then get the golden **MoveVelocity** vector 
++ AI tanks can now use our fly-by-wire controls!
+
+### DotProduct() Vector Operator ###
+
++ Focusing on controlling forward speed of AI
++ If target in front, move forward full speed 
++ If target to side, don’t move forward 
++ Vary smoothly in-between 
++ This sounds like a cosine function to me! 
++ Using **FVector::DotProduct()**
+
+### CrossProduct() Vector Operator ###
+
++ Focusing on controlling turning of AI
++ If target in front or behind* don’t rotate 
++ If target to side rotate at full speed 
++ This is the behaviour of a sin function 
++ Using **FVector::CrossProduct()**
+
+### Finalising Your Class Code ###
+
++ Private, protected or public? Use the safest
++ UPROPERY / UFUNCTION needed? Use “” 
++ **#include** and forward declarations required?
+
+### How to Use Blueprint Variables ###
+
++ Remember “what’s the least fun thing about this?”
++ One thing is not knowing if you can fire 
++ How to change crosshair colour in blueprint… 
++ … according to the aiming component state 
++ States: Locked, Aiming, Reloading 
++ Referencing actor component from player UI.
+
+### Using Enum(erations) in UE4 ###
+
++ We met **enum class** around lecture 35
++ In Unreal we must annotate with **UENUM()**
++ We must specify the storage type (**uint8**) 
++ See Unreal’s coding standards in Resources 
++ Remember we use enums to encode meaning.
+
+### Refactoring our Aiming Component ###
+
++ Move away from **CreateDefaultSubObject()**
++ Make aiming a **BlueprintSpawanableComponent**
++ Get our code re-compiling as soon as possible
++ Experience hard crash and add pointer protection
++ Possibly get exasperated that we can’t find the suspected null-pointer causing the crash.
+
+### Attaching a Debugger to Unreal ###
+
++ Hard crashes can be difficult to diagnose
++ Attach your IDE’s debugger to the Unreal editor 
++ Use it to discover the source (often null pointer) 
++ We can also probe using Print in blueprint.
+
+### Constructor & Begin Play Timing ###
+
++ Adding log entries to C++ and BP helps you to uncover the timing over events in the engine
++ We’re doing this to discover exactly when Construct and Begin Play gets called in both C++ and Blueprint 
++ Note dropped actors are constructed in editor.
+
+### Decoupling the Architecture ###
+
++ We don’t have a Aiming Component reference
++ It is hard to find a sensible time to set it
++ Also we don’t need the reference on the tank
++ We can Get Components by Class in Blueprint
++ Mock-up our C++ code in Blueprint.
+
+### BlueprintImplementableEvent ###
+
++ We want to expose a C++ function to Blueprint
++ We also want to pass a parameter (aiming ref.) 
++ Multicast delegates only work like this for actors 
++ We’re using a component so we use… 
++ **UFUNCTION(BlueprintImplementableEvent)**
++ You don’t need to define the function!
+
+### Using the ensure Assertion ###
+
+### Dependency Mapping ###
+
++ Code architecture can be hard to see
++ Dependency mapping shakes-out the structure 
++ Go through your .cpp files and look at includes 
++ Map these as dependencies on a diagram 
++ If it looks like spaghetti, you need to refactor!
+
+### Talking Head - Real World Skills ###
+
++ Congratulations on getting this far
++ We’re not teaching sterile solutions here 
++ We’re showing you how to recognise real issues 
++ … and how to tackle them sensibly 
++ It’s not the easy path, but it is the valuable one.
+
+### Starting From Green ###
+
++ You should probably only refactor working code
++ Red means your code’s not working 
++ Green means it is, even if the code is messy 
++ We commit at green, then start refactoring.
+
+### Aiming Without the Tank ###
+
++ There is no need to cast the Pawn to a Tank
++ Doing so creates a dependency we don’t want 
++ Remember a Tank is a Pawn 
++ We simplify our architecture here.
+
+### Finishing Refactoring ###
+
++ Removing our final dependencies
++ If you override **BeginPlay()** in an actor you should call **Super::BeginPlay()**
++ If you don’t override it at all, there’s no need to, your Blueprint Begin Play will still run.
+
+### "Defining" Floats Equal ###
+
++ FVectors are just structs containing float
++ You must “define equal” when comparing floats
++ The **FVector::Equals()** method allows this
++ Specify a tolerance, see docs in resources.
+
+### Programmatic Sideways Friction ###
+
++ We can apply a sideways correction force
++ Remember Force = Mass * Acceleration
++ … and Acceleration = Speed / Time
++ So we calculate the force using the slippage speed,the frame time, and the tank mass
++ A way to calculate is **FVector::DotProduct()**
+
+### OnComponentHit Event ###
+
++ We could use OnComponentHit in Blueprint
++ But we’re grown-ups so we’re going to use C++
++ Signature of **OnHit(...)** has changed in 4.12
++ Remember you need to make it a **UFUNCTION**
++ Details on next slide.
+
+### Avoiding Boolean Flags ###
+
++ Boolean flags usually make answers old
++ Try and think of a way of avoiding them 
++ Revise the use of **FMath::Clamp()**
+
+### Improving Tank Aiming ###
+
++ Use a literal glass ceiling to help with testing!
++ Sometimes the barrel takes the long route 
++ A simple **if()** statement can help here 
++ Find and fix another bug in the code 
++ You can use **%i** formatter to log booleans.
+
+### Tweaking Tank AI ###
+
++ Expose the Acceptance Radius to blueprint
++ Tweak that value as **EditAnywhere**
++ Change back to **EditDefaultsOnly** once found 
++ Prevent AI tanks firing until aiming is locked.
+
+### Making an Ammo Display ###
+
++ Add a 4th enum state for out of ammo
++ Work around bug of blueprint select nodes not updating when we add new enum values in C++ 
++ Add a display for rounds remaining 
++ Bind the UI to a **GetRounds()** method.
+
+### Making an AutoMortar ###
+
++ The tank components were built for the tank
++ It turns-out we can re-use movement and aiming 
++ This is the benefit of re-usable components 
++ We’ll create a self-aiming mortar tower.
+
+### Using the Reference Viewer ###
+
++ Currently we .gitignore the Starter Content
++ Therefore we can’t track changes 
++ We want a consistent starting point for particles 
++ So we’re going to delete Starter Content 
++ Lots depends on it so we use a special tool 
++ That special tool is the reference viewer.
+
+### Preparing for Particles ###
+
++ We will compose our projectile in C++
++ Use **SetRootComponent**() 
++ Use **AttachTo(RootComponent)**
++ You can set default properties in C++ 
++ Use **UPROPERTY(VisibleAnywhere)**
+
+### Introducing Particle Systems ###
+
++ Setup a Starter Content project
++ Use it to migrate assets to Battle Tank 
++ Explore particle systems 
++ Use world space for smoke trails 
++ Create and share your smoke trail.
+
+### Particle Bounding Boxes ###
+
++ Our smoke disappeared when viewed from side
++ This is due to the fixed particle bounding boxes 
++ We can fix it by making the boxes dynamic 
++ BUT we need to remove GPU rendered particles 
++ … and test the performance hit is acceptable.
