@@ -22,10 +22,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	UTankAimingComponent* GetAimingReference();
 
+/* //REFACTORED.. TODO remove after checking stability
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
-
+*/
 private:
 	//Start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrosshair();

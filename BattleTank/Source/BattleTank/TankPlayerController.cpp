@@ -7,12 +7,12 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+								//REFACTORED... TODO Remove after checking stability
+	/*auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
-	}
+	}*/
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
