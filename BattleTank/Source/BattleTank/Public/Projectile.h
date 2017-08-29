@@ -17,6 +17,8 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
+	virtual void BeginPlay() override;
+
 	void LaunchProjectile(float Speed);
 
 	UPROPERTY(VisibleAnywhere)
@@ -25,7 +27,14 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UParticleSystemComponent* LaunchBlast = nullptr;
 
+	UPROPERTY(VisibleAnywhere)
+		UParticleSystemComponent* ImpactBlast = nullptr;
+
 private:
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
 
 };
