@@ -25,7 +25,7 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 
 void ATankPlayerController::StartSpectatingOnly()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PLAYER RECEIVED"));
+	
 }
 
 void ATankPlayerController::Tick(float DeltaTime)

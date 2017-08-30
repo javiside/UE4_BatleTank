@@ -45,5 +45,5 @@ private:
 	virtual void SetPawn(APawn* InPawn) override;
 
 	UFUNCTION()
-		void StartSpectatingOnly();
+		virtual void StartSpectatingOnly() override;
 };
