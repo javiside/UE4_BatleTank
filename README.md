@@ -619,3 +619,79 @@ by the end :-)
 + We can fix it by making the boxes dynamic 
 + BUT we need to remove GPU rendered particles 
 + … and test the performance hit is acceptable.
+
+### Using FAttachmentTransformRules ###
+
++ Use Message Log to see warnings
++ **AttachTo()** has become **AttachToComponent()**
++ Now must provide **FAttachmentTransformRules**
++ We’ll use **KeepRelativeTransform** for now 
++ Write code to de-active launch blast and 
++ Activate impact blast on impact.
+
+### Radial Forces & Caching ###
+
++ If you don’t **AttachToComponent()** then…
++ It will look like you’re attached but… 
++ The transform may be broken and… 
++ You’ll get really weird effects and… 
++ Unreal may cache the issue...
++ So, always **AttachToComponent()** :-)
+
+### Using GetTimerManager() ###
+
++ Currently we don’t destroy our projectiles
++ This will cause slow-down and memory leakage 
++ You won’t pass console testing with a leak 
++ Tidy up after ourselves 
++ Discuss projectile schemes 
++ Destroy our projectiles with a timer.
+
+### Using TakeDamage() on Actors ###
+
++ Unreal has an actor damage system
++ We’ll apply radial damage from the projectile 
++ Then the **AActor::TakeDamage()** method will be called on the tank (and all other actors in radius) 
++ We’ll then finish our damage system off 
++ Solve the **int** or **float** damage question.
+
+### BlueprintPure & Health Bars ###
+
++ Add a UI Widget component to our tank
++ Make a very simple health progress bar 
++ Wire the bar to the tank.
+
+### The Observer Pattern ###
+
+### Finishing Off - Part 1 ###
+
++ We’re nearing the end of the section
++ You have several challenges over to try
++ These include various fixes and improvements...
++ Use **StartSpectatingOnly()** in Player Controller
++ **DetachFromControllerPendingDestroy()** in AI
++ Fixing a bug with our starting health
+
+### Finishing Off - Part 2 ###
+
++ You can use the noise function on landscapes
++ Gameobjects are automatically destroyed when they travel a long way from the play area 
++ Reviewing Unreal’s coding standards.
+
+### Section 4 Wrap-Up ###
+
+In this section we covered...
++ Basic terrain landscaping
++ Using and modifying the AI pathfinding system 
++ A deep-dive into control systems 
++ User Interface for the first time 
++ A whole tonne of C++ and architecture.
+
+### Bonus - Switching Cameras ###
+
++ Our player controller line traces to aim
++ This can hit the UI in some circumstances
++ Change our line trace channel to ECC::Camera
++ Add a 1st person camera
++ Use the Toggle Visibility Blueprint node
++ Bind input and enjoy simple camera swapping.
