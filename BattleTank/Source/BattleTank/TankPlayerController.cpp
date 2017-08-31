@@ -18,14 +18,13 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 	{
 		auto PossessedTank = Cast<ATank>(InPawn);
 		if (!ensure(PossessedTank)) { return; }
-
-		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::StartSpectatingOnly);
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPlayerTankDeath);
 	}
 }
 
-void ATankPlayerController::StartSpectatingOnly()
+void ATankPlayerController::OnPlayerTankDeath()
 {
-	
+	StartSpectatingOnly();
 }
 
 void ATankPlayerController::Tick(float DeltaTime)

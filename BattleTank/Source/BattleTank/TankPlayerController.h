@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	UTankAimingComponent* GetAimingReference();
 
+	UFUNCTION()
+		void OnPlayerTankDeath();
+
 private:
 	//Start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
@@ -43,7 +46,4 @@ private:
 		float LineTraceRange = 1000000.0f;
 
 	virtual void SetPawn(APawn* InPawn) override;
-
-	UFUNCTION()
-		virtual void StartSpectatingOnly() override;
 };

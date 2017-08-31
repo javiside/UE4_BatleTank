@@ -17,6 +17,9 @@ class BATTLETANK_API ATank : public APawn
 	ATank();
 
 public:
+
+	virtual void BeginPlay() override;
+
 	// Called by the engine when actor damage is dealt
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
@@ -30,6 +33,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		int32 StartingHealth = 1000;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Health")
-		int32 CurrentHealth = StartingHealth;
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+		int32 CurrentHealth; //initialised on beginplay()
 };

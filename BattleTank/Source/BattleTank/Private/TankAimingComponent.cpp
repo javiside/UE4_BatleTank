@@ -34,6 +34,11 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	SetFiringState();
+}
+
+void UTankAimingComponent::SetFiringState()
+{
 	if (RoundsLeft <= 0)
 	{
 		FiringState = EFiringState::OutOfAmmo;

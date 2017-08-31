@@ -10,14 +10,23 @@ UTankTrack::UTankTrack()
 void UTankTrack::BeginPlay()
 {
 	Super::BeginPlay();
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
-void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+void UTankTrack::SetThrottle(float Throttle)
 {
-	DriveTrack();
-	ApplySidewaysForce();
-	CurrentThrottle = 0;
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+		DriveTrack();
+		ApplySidewaysForce();
+		CurrentThrottle = 0;
+}
+
+void UTankTrack::DriveTrack()
+{
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
+
+	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+	auto ForceLocation = TankRoot->GetSocketLocation(*GetName());
+	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
 
 void UTankTrack::ApplySidewaysForce()
@@ -30,20 +39,3 @@ void UTankTrack::ApplySidewaysForce()
 	auto CorrectionForce = (TankRoot->GetMass() *CorrectionAcceletation) / 2; //Two Tracks
 	TankRoot->AddForce(CorrectionForce);
 }
-
-void UTankTrack::SetThrottle(float Throttle)
-{
-	//UE_LOG(LogTemp, Warning, TEXT("%f THRO CALL"), Throttle);
-	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
-}
-
-void UTankTrack::DriveTrack()
-{
-	//UE_LOG(LogTemp, Warning, TEXT("%f DRIVE CALL"), GetWorld()->GetTimeSeconds());
-	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
-	auto ForceLocation = GetComponentLocation();
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-}
-
-
